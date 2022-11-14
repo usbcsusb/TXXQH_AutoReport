@@ -37,7 +37,7 @@ def server_turbo(state):
     # state ==1 打卡成功 state == 0 打卡失败
     url = "https://sctapi.ftqq.com/SCT131816TkxW9qOYXKbIJQiKu4nUdOFZt.send"
     note = get_msg()
-    payload = "------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"title\"\r\n\r\nGitHubAction 打卡成功! 每日一言：" + note + "\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"desp\"\r\n\r\n每日一言：" + note + "\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW--"
+    payload = "------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"title\"\r\n\r\nGitHubAction 打卡成功! 每日一言：" + note + user_account + "\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"desp\"\r\n\r\n每日一言：" + note + "\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW--"
     payload_error = "------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"title\"\r\n\r\n打卡失败!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"desp\"\r\n\r\n赶快登陆 https://yqtb.sut.edu.cn/login/base#home 手动打卡吧\r\n\r\n 每日一言：" + note + "\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW--"
     headers = {
         'content-type': "multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW",
