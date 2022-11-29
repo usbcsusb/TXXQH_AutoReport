@@ -10,7 +10,7 @@ on:
   pull_request:
     branches: [ main ]
   schedule:
-    - cron: 15 5-8/2 * * *
+    - cron: 15 5-7/1 * * *
 # 13:30分开始, 13:30 15:30 上报两次
 jobs:
   build:
