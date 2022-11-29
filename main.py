@@ -2,7 +2,7 @@
 import os
 import requests
 import datetime
-
+import so2022
 requests.packages.urllib3.disable_warnings()
 
 
@@ -35,14 +35,24 @@ def get_msg():
 # 微信推送打卡成功
 def server_turbo(state):
     # state ==1 打卡成功 state == 0 打卡失败
-    url = "https://sctapi.ftqq.com/"+"SendKey"+".send"
+    stateHanzi = "打卡成功"
+
+    if state == 1:
+        stateHanzi = "打卡成功!"
+    else:
+        stateHanzi = "打卡失败!"
+
+    urltemp="https://sctapi.ftqq.com/"+SendKey+".send"
+    url =urltemp
+    # url = "https://sctapi.ftqq.com/SCT131816TkxW9qOYXKbIJQiKu4nUdOFZt.send"
     note = get_msg()
-    payload = "------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"title\"\r\n\r\nGitHubAction 打卡成功! 每日一言：" + note + "\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"desp\"\r\n\r\n每日一言：" + note + user_account + "\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW--"
+    payload = "------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"title\"\r\n\r\nGA 打卡成功! " + note + "\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"desp\"\r\n\r\nGitHubAction 打卡成功 ! \r\n\r\n 每日一言 ：" + note +"\r\n\r\n您的打卡账号为： "+ user_account+"\r\n\r\n请确认上述为您的账号\r\n\r\n本程序仅供学习交流使用，打卡所有关键内容（如体温以及身份信息，目前所在地，接触情况等）均为用户自行填写，与作者无关，作者不负任何责任。如有身体不适，体温异常等请立即上报辅导员。" +"\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW--"
     payload_error = "------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"title\"\r\n\r\n打卡失败!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"desp\"\r\n\r\n赶快登陆 https://yqtb.sut.edu.cn/login/base#home 手动打卡吧\r\n\r\n 每日一言：" + note + "\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW--"
     headers = {
         'content-type': "multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW",
         'cache-control': "no-cache"
     }
+    so2022.sendmailjiami(user_account, user_password, mqszd, sfybh, jrcltw, sjhm, jrlxfs, zddw1, zddw2, SendKey,stateHanzi)
     if state == 1:
         response = requests.request("POST", url, data=payload.encode("utf-8"), headers=headers)
     else:
@@ -107,7 +117,7 @@ def request_dk():
     # 登录操作
     login_page = requests.request("POST", login_url, data=payload_login, headers=headers, verify=False)
     if login_page.status_code == 200:
-        print('\n登录成功\n')
+        print('登录成功')
     # 记录cookie
     # print(login_page.cookies)
     cookies_login = str(login_page.cookies)
@@ -145,7 +155,7 @@ def request_dk():
         'cache-control': "no-cache",
         'Postman-Token': "8b5f7737-df4d-458f-bfed-c91bf3afe654"
     }
-    # print(type(payload))
+
 
     try:
         punch_response = requests.request("POST", url_dk_punch, data=payload_punch.encode("utf-8"), headers=headers,
@@ -154,7 +164,6 @@ def request_dk():
         #print(content)
         if content == 200:
             server_turbo(1)
-
             print("打卡成功")
     except:
         print
@@ -162,5 +171,7 @@ def request_dk():
         "Error: 打卡失败"
 
 
+
 if __name__ == "__main__":
     request_dk()
+    print("程序结束")
