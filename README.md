@@ -1,6 +1,6 @@
 
 # [SUT打卡自动化——基于Python requests](https://github.com/usbcsusb/SUT-AutoReport-python)
-
+## 推送bug已经修复 需要重新fork
 ![GitHub last commit](https://img.shields.io/github/last-commit/usbcsusb/SUT_AutoReport)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/usbcsusb/SUT_AutoReport)  
 
